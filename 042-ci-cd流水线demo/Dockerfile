@@ -1,5 +1,8 @@
 FROM node:18-alpine
 WORKDIR /app
+ENV NODE_ENV=production
+ENV CI=true
+ENV PORT=3000
 COPY package.json ./
 RUN npm install --production
 COPY app.js ./

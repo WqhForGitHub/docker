@@ -2,6 +2,9 @@ FROM node:18-alpine
 WORKDIR /app
 ARG VERSION=1.0
 ENV APP_VERSION=$VERSION
+ENV NODE_ENV=production
+ENV DEPLOY_STRATEGY=canary
+ENV CANARY_WEIGHT=20
 COPY app.js ./
 EXPOSE 3000
 CMD ["node", "app.js"]
