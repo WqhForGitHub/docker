@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports: ["3000:3000"]
+    depends_on: [db]
+    environment:
+      - DB_HOST=db
+      - DB_USER=kb
+      - DB_PASS=kbpass
+      - DB_NAME=knowledge
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: kb
+      POSTGRES_PASSWORD: kbpass
+      POSTGRES_DB: knowledge
+    volumes: [db_data:/var/lib/postgresql/data]
+
+volumes:
+  db_data:

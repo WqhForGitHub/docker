@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>短链接</title>
+  </head>
+  <body>
+    <h1>短链接生成服务</h1>
+    <input id="url" placeholder="输入长链接" style="width: 400px" /><button onclick="shorten()">生成</button>
+    <p id="result"></p>
+    <script>
+      async function shorten() {
+        const r = await fetch("/api/shorten", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url: url.value }),
+        });
+        const d = await r.json();
+        document.getElementById("result").innerHTML = `短链接: <a href="${d.short}" target="_blank">${d.short}</a>`;
+      }
+    </script>
+  </body>
+</html>

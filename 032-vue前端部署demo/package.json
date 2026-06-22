@@ -1,0 +1,7 @@
+{
+  "name": "vue-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p dist && echo '<h1>Vue 前端部署</h1><p>构建产物部署到 Nginx</p>' > dist/index.html"
+  }
+}

@@ -1,0 +1,4 @@
+FROM node:18-alpine
+WORKDIR /app
+COPY test.js ./
+CMD ["node", "test.js"]

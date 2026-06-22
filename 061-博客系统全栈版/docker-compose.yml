@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [backend, db]
+
+  backend:
+    build: ./backend
+    ports: ["3000:3000"]
+    depends_on: [db]
+    environment:
+      - DB_HOST=db
+      - DB_USER=blog
+      - DB_PASS=blogpass
+      - DB_NAME=blog
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: blog
+      POSTGRES_PASSWORD: blogpass
+      POSTGRES_DB: blog
+    volumes: [db_data:/var/lib/postgresql/data]
+
+volumes:
+  db_data:

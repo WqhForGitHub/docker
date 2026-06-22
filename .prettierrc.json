@@ -1,0 +1,52 @@
+{
+  "plugins": ["prettier-plugin-sh", "prettier-plugin-java"],
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": ["*.yml", "*.yaml"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.html"],
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": ["Dockerfile", "*.Dockerfile"],
+      "options": {
+        "parser": "dockerfile"
+      }
+    },
+    {
+      "files": ["*.sh"],
+      "options": {
+        "parser": "sh"
+      }
+    },
+    {
+      "files": ["*.env", ".env", ".env.*"],
+      "options": {
+        "parser": "sh"
+      }
+    },
+    {
+      "files": ["*.java"],
+      "options": {
+        "parser": "java",
+        "tabWidth": 4
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "es-search-demo",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "@elastic/elasticsearch": "^8.10.0"
+  }
+}

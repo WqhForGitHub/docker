@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <title>前后端分离</title>
+  </head>
+  <body>
+    <h1>前端页面</h1>
+    <button onclick="loadData()">加载数据</button>
+    <pre id="result"></pre>
+    <script>
+      async function loadData() {
+        const res = await fetch("/api/");
+        const data = await res.json();
+        document.getElementById("result").textContent = JSON.stringify(data, null, 2);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "VSCode Remote Dev",
+  "build": { "dockerfile": "Dockerfile" },
+  "forwardPorts": [3000],
+  "extensions": ["ms-vscode.docker", "dbaeumer.vscode-eslint"],
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "sh"
+  }
+}

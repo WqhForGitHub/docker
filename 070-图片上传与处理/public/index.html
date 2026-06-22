@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>图片上传</title>
+  </head>
+  <body>
+    <h1>图片上传与处理</h1>
+    <input type="file" id="file" accept="image/*" />
+    <button onclick="upload()">上传</button>
+    <div id="result"></div>
+    <hr />
+    <button onclick="list()">查看所有图片</button>
+    <div id="images"></div>
+    <script>
+      async function upload() {
+        const fd = new FormData();
+        fd.append("image", file.files[0]);
+        const r = await fetch("/api/upload", { method: "POST", body: fd });
+        const d = await r.json();
+        document.getElementById("result").innerHTML = `<p>上传成功: <img src="${d.url}" width="200"></p>`;
+      }
+      async function list() {
+        const r = await fetch("/api/images");
+        const d = await r.json();
+        document.getElementById("images").innerHTML = d
+          .map((i) => `<img src="${i.url}" width="150" style="margin:5px">`)
+          .join("");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>聊天室</title>
+  </head>
+  <body>
+    <h1>在线聊天室</h1>
+    <div id="messages" style="height: 300px; overflow: auto; border: 1px solid #ccc"></div>
+    <input id="input" placeholder="输入消息..." /><button onclick="send()">发送</button>
+    <script>
+      const ws = new WebSocket(`ws://${location.host}`);
+      ws.onmessage = (e) => {
+        const msg = JSON.parse(e.data);
+        document.getElementById("messages").innerHTML += `<p>${msg.user || "系统"}: ${msg.msg || msg.text || ""}</p>`;
+      };
+      function send() {
+        const input = document.getElementById("input");
+        ws.send(JSON.stringify({ user: "匿名", msg: input.value }));
+        input.value = "";
+      }
+    </script>
+  </body>
+</html>

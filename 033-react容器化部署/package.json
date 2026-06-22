@@ -1,0 +1,7 @@
+{
+  "name": "react-demo",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p build && echo '<h1>React 容器化部署</h1>' > build/index.html"
+  }
+}

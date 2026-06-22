@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  app-test:
+    build: ./app
+    ports: ["3001:3000"]
+    environment:
+      - NODE_ENV=test
+      - DB_HOST=test-db
+    depends_on: [test-db]
+    networks: [test-net]
+
+  test-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: testdb
+    networks: [test-net]
+    tmpfs: /var/lib/postgresql/data
+
+  runner:
+    build: ./runner
+    depends_on: [app-test]
+    networks: [test-net]
+    environment:
+      - APP_URL=http://app-test:3000
+
+networks:
+  test-net:
+    driver: bridge
+    internal: true

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>全栈博客</title>
+  </head>
+  <body>
+    <h1>全栈博客系统</h1>
+    <div id="posts"></div>
+    <script>
+      fetch("/api/posts")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("posts").innerHTML = d
+            .map((p) => `<article><h2>${p.title}</h2><p>${p.content}</p></article>`)
+            .join("");
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+  <head>
+    <title>问答系统</title>
+  </head>
+  <body>
+    <h1>问答系统</h1>
+    <input id="title" placeholder="问题标题" /><br />
+    <textarea id="content" placeholder="问题描述"></textarea><br />
+    <button onclick="ask()">提问</button>
+    <div id="list"></div>
+    <script>
+      async function load() {
+        const r = await fetch("/api/questions");
+        const d = await r.json();
+        document.getElementById("list").innerHTML = d
+          .map((q) => `<div><h3>${q.title}</h3><p>${q.content}</p><p>回答数: ${q.answers.length}</p></div>`)
+          .join("");
+      }
+      async function ask() {
+        await fetch("/api/questions", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title.value, content: content.value }),
+        });
+        title.value = content.value = "";
+        load();
+      }
+      load();
+    </script>
+  </body>
+</html>

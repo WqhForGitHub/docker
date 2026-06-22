@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports: ["3000:3000"]
+    depends_on: [db]
+    environment:
+      - DB_HOST=db
+      - DB_USER=task
+      - DB_PASS=taskpass
+      - DB_NAME=task
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: task
+      POSTGRES_PASSWORD: taskpass
+      POSTGRES_DB: task
+    volumes: [db_data:/var/lib/postgresql/data]
+
+volumes:
+  db_data:

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <title>任务管理</title>
+  </head>
+  <body>
+    <h1>任务管理系统</h1>
+    <input id="t" /><button onclick="add()">添加</button>
+    <div id="list"></div>
+    <script>
+      async function load() {
+        const r = await fetch("/tasks");
+        const d = await r.json();
+        document.getElementById("list").innerHTML = d
+          .map(
+            (t) =>
+              `<p><input type="checkbox" ${t.done ? "checked" : ""} onclick="toggle(${t.id},${!t.done})">${t.title} <button onclick="del(${t.id})">x</button></p>`
+          )
+          .join("");
+      }
+      async function add() {
+        await fetch("/tasks", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: t.value }),
+        });
+        t.value = "";
+        load();
+      }
+      async function toggle(id, done) {
+        await fetch("/tasks/" + id, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ done }),
+        });
+        load();
+      }
+      async function del(id) {
+        await fetch("/tasks/" + id, { method: "DELETE" });
+        load();
+      }
+      fetch("/init").then(load);
+    </script>
+  </body>
+</html>

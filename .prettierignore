@@ -1,0 +1,6 @@
+node_modules/
+package-lock.json
+.git/
+
+# Helm templates contain Go template directives, not valid YAML
+045-helm部署示例/chart/templates/

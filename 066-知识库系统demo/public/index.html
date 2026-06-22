@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <title>知识库</title>
+  </head>
+  <body>
+    <h1>知识库系统</h1>
+    <input id="q" placeholder="搜索..." /><button onclick="search()">搜索</button>
+    <hr />
+    <h3>新增文章</h3>
+    <input id="title" placeholder="标题" /><br />
+    <textarea id="content" placeholder="内容"></textarea><br />
+    <button onclick="add()">添加</button>
+    <div id="list"></div>
+    <script>
+      async function load(q = "") {
+        const r = await fetch("/api/articles?q=" + q);
+        const d = await r.json();
+        document.getElementById("list").innerHTML = d
+          .map((a) => `<div><b>${a.title}</b><p>${a.content}</p></div>`)
+          .join("");
+      }
+      function search() {
+        load(q.value);
+      }
+      async function add() {
+        await fetch("/api/articles", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title: title.value, content: content.value }),
+        });
+        title.value = content.value = "";
+        load();
+      }
+      fetch("/init").then(() => load());
+    </script>
+  </body>
+</html>

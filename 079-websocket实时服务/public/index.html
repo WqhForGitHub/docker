@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <head>
+    <title>WebSocket 实时服务</title>
+  </head>
+  <body>
+    <h1>WebSocket 实时服务</h1>
+    <div>实时数据: <span id="data">-</span></div>
+    <div>时间: <span id="time">-</span></div>
+    <hr />
+    <input id="msg" /><button onclick="send()">发送</button>
+    <div id="log"></div>
+    <script>
+      const ws = new WebSocket(`ws://${location.host}`);
+      ws.onmessage = (e) => {
+        const d = JSON.parse(e.data);
+        if (d.type === "tick") {
+          document.getElementById("data").textContent = d.value;
+          document.getElementById("time").textContent = d.time;
+        } else {
+          document.getElementById("log").innerHTML =
+            `<p>${d.msg || JSON.stringify(d)}</p>` + document.getElementById("log").innerHTML;
+        }
+      };
+      function send() {
+        ws.send(msg.value);
+        msg.value = "";
+      }
+    </script>
+  </body>
+</html>

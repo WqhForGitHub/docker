@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "format": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.yml\" \"**/*.yaml\" \"**/*.html\" \"**/*.md\" \"**/Dockerfile\" \"**/*.sh\" \"**/*.java\" --no-error-on-unmatched-pattern",
+    "format:check": "prettier --check \"**/*.js\" \"**/*.json\" \"**/*.yml\" \"**/*.yaml\" \"**/*.html\" \"**/*.md\" \"**/Dockerfile\" \"**/*.sh\" \"**/*.java\" --no-error-on-unmatched-pattern",
+    "format:py": "black --exclude node_modules \"**/*.py\""
+  },
+  "devDependencies": {
+    "prettier": "^3.8.4",
+    "prettier-plugin-java": "^2.9.7",
+    "prettier-plugin-sh": "^0.18.1",
+    "sql-formatter": "^15.8.2"
+  }
+}

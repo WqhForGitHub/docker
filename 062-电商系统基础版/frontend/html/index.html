@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title>电商系统</title>
+  </head>
+  <body>
+    <h1>电商系统基础版</h1>
+    <div id="products">加载中...</div>
+    <script>
+      fetch("/api/products")
+        .then((r) => r.json())
+        .then((d) => {
+          document.getElementById("products").innerHTML = d
+            .map((p) => `<div><b>${p.name}</b> ¥${p.price}</div>`)
+            .join("");
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports: ["3000:3000"]
+    depends_on: [db]
+    environment:
+      - MONGO_URL=mongodb://db:27017/qa
+
+  db:
+    image: mongo:7
+    volumes: [db_data:/data/db]
+
+volumes:
+  db_data:

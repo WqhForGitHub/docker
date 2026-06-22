@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+    <title>在线投票</title>
+  </head>
+  <body>
+    <h1>在线投票系统</h1>
+    <div id="options"></div>
+    <hr />
+    <div id="results"></div>
+    <script>
+      const opts = [];
+      fetch("/api/options")
+        .then((r) => r.json())
+        .then((d) => {
+          opts.push(...d);
+          document.getElementById("options").innerHTML = d
+            .map((o, i) => `<button onclick="vote('${o}')">${o}</button>`)
+            .join(" ");
+          loadResults();
+          setInterval(loadResults, 2000);
+        });
+      async function vote(o) {
+        await fetch("/api/vote", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ option: o }),
+        });
+        loadResults();
+      }
+      async function loadResults() {
+        const r = await fetch("/api/results");
+        const d = await r.json();
+        document.getElementById("results").innerHTML = Object.entries(d)
+          .map(([k, v]) => `<p>${k}: ${v}票</p>`)
+          .join("");
+      }
+    </script>
+  </body>
+</html>

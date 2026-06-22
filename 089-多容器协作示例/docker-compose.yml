@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  gateway:
+    build: ./gateway
+    ports: ["8080:8080"]
+    depends_on: [service-a, service-b]
+    environment:
+      - SERVICE_A_URL=http://service-a:3001
+      - SERVICE_B_URL=http://service-b:3002
+
+  service-a:
+    build: ./service-a
+    environment:
+      - SERVICE_NAME=service-a
+
+  service-b:
+    build: ./service-b
+    environment:
+      - SERVICE_NAME=service-b

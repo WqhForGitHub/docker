@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  gateway:
+    build: ./gateway
+    ports: ["8080:8080"]
+    depends_on: [user-svc, order-svc, payment-svc]
+    restart: always
+
+  user-svc:
+    build: ./user-svc
+    restart: always
+
+  order-svc:
+    build: ./order-svc
+    depends_on: [db]
+    restart: always
+
+  payment-svc:
+    build: ./payment-svc
+    depends_on: [queue]
+    restart: always
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: apppass
+      POSTGRES_DB: app
+    volumes: [db_data:/var/lib/postgresql/data]
+
+  queue:
+    image: redis:alpine
+    volumes: [queue_data:/data]
+
+  monitor:
+    image: prom/prometheus
+    ports: ["9090:9090"]
+    volumes: [./prometheus.yml:/etc/prometheus/prometheus.yml]
+
+volumes:
+  db_data:
+  queue_data:
